@@ -1,0 +1,6 @@
+#install.packages()
+install.packages('tidyverse')
+install.packages('sf')
+install.packages('leaflet')
+install.packages('htmltools')
+install.packages('rgbif')
