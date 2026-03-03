@@ -1,0 +1,57 @@
+---
+title: "Sunfish_map"
+author: "Johan Cronje"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+loading the required packages
+```{r}
+library(leaflet)
+library(htmltools)
+library(RColorBrewer)
+library(rgbif)
+library(tidyverse)
+library(sf)
+```
+
+
+Importing a subset of the data, containing just the fish family I am interested in, for the map.
+```{r}
+#download key
+res <- "0003331-260225131425191"
+
+centrarchidae<- occ_download_get(res) %>% occ_download_import() %>% 
+  filter(family == 'Centrarchidae')
+```
+
+Downloaded dataset has coordinates but isn't seen as a spatial object by R, just as a dataset. This code converts it into a spatial object needed to plot it on a map
+```{r}
+centrarchidae<- st_as_sf(centrarchidae, coords = c('decimalLongitude','decimalLatitude'), crs =4326)
+
+```
+
+creating a color palette for the different species that will be plotted on the map
+```{r}
+pal <- c('#8F00FF','#FB00FF','#00D2FF','#00FF47')
+```
+
+This piece of code creates an interactive map and plots where each species of centrachidae found in South africa have occured.
+```{r}
+leaflet() %>%
+  addTiles(group = 'specificEpithet') %>%
+  addCircleMarkers(data =  centrarchidae,
+                   group =c("macrochirus","dolomieu",'punctulatus','salmoides'),
+                   radius = 0.5,
+                   color = pal,
+                   opacity =1) %>%
+  addLegend(position = "topleft",
+            color=pal,
+            labels = c("Bluegill","Smallmouth Bass",'Spotted Bass','Largemouth Bass (Florida var.)')) 
+```
+
+
