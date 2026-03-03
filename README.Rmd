@@ -1,0 +1,8 @@
+---
+title: "README"
+author: "Johan Cronje"
+date: "`r Sys.Date()`"
+output: github_document
+---
+
+Readme for my repo
