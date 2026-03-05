@@ -54,4 +54,5 @@ leaflet() %>%
             labels = c("Bluegill","Smallmouth Bass",'Spotted Bass','Largemouth Bass (Florida var.)')) 
 ```
 
+Figure 1. Map showing the occurence of four species of fish in the family Centrarchidae across South Africa.  
 
